@@ -66,7 +66,7 @@ void Logbook::writeToFile(const QString &msg, const QByteArray *prefixGraphics)
     }
 
     if (!listOutput.isEmpty()) {
-        for (const QString &str: listOutput) {
+        for (const QString &str: qAsConst(listOutput)) {
             file.write(str.toUtf8());
             file.write("\n");
         }
@@ -124,15 +124,13 @@ QString Logbook::getSavingFile()
     return listFilesWithPrefix.back();
 }
 
-QStringList Logbook::getListFilesInDir(const QString &dir)
+QStringList Logbook::getListFilesInDir(const QString &dirName, const bool addAbsoluteFilePath)
 {
+    const auto entryInfoList = QDir(dirName).entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot);
     QStringList list;
-    QDir directory(dir);
-
-    for(const QFileInfo &info: directory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot)) {
-
+    for(const QFileInfo &info: entryInfoList) {
         if(!info.isDir()){
-            list.append(info.absoluteFilePath());
+            list.append(addAbsoluteFilePath ? info.absoluteFilePath() : info.fileName());
         }
     }
     return list;

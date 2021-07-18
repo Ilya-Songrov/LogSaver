@@ -48,7 +48,7 @@ TARGET  = LogSaver
 DESTDIR = $$TARGET
 
 rebuild.target = rebuild_destdir
-rebuild.commands = rm -rf $$OUT_PWD/$$DESTDIR/* ; cp $$PWD/LogSaver/logsaver.h $$OUT_PWD/$$DESTDIR
+rebuild.commands = rm -rf $$OUT_PWD/$$DESTDIR/* ; cp $$PWD/logger/logsaver.h $$OUT_PWD/$$DESTDIR
 PRE_TARGETDEPS = $$rebuild.target
 QMAKE_EXTRA_TARGETS += rebuild
 

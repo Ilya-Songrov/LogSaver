@@ -19,6 +19,12 @@ int main(int argc, char *argv[])
         parser.addVersionOption();
         parser.process(app);
 
+        qDebug() << "qDebug" << Qt::endl;
+        qInfo() << "qInfo" << Qt::endl;
+        qWarning() << "qWarning" << Qt::endl;
+        qCritical() << "qCritical" << Qt::endl;
+//        qFatal("qFatal");
+
         return app.exec();
     }
     catch (ExceptionError &exceptionError) {

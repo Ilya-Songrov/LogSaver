@@ -40,5 +40,5 @@ private:
     static void writeToFile(const QString &msg, const QByteArray *prefixGraphics = nullptr);
     static void saveCurrentMsg(const QString &msg, const QByteArray *prefixGraphics = nullptr);
     static QString getSavingFile();
-    static QStringList getListFilesInDir(const QString &dir);
+    static QStringList getListFilesInDir(const QString &dir, const bool addAbsoluteFilePath = true);
 };

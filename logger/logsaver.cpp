@@ -3,7 +3,7 @@
 
 #include <QMetaClassInfo>
 
-LogSaver::LogSaver(const QString &logDir, const QString &prefixLogFile, const QString &sufixLogFile, QObject *parent)
+LogSaver::LogSaver(const QString &logDir, const QString &prefixLogFile, const QString &sufixLogFile, QObject *parent) : QObject(parent)
 {
     GlobalSettingsLog globalSettingsLog;
     globalSettingsLog.logDir        = logDir;
@@ -18,7 +18,5 @@ LogSaver::LogSaver(const QString &logDir, const QString &prefixLogFile, const QS
 
 QString LogSaver::getVersionClass()
 {
-    const QString version = LogSaver::staticMetaObject.classInfo(LogSaver::staticMetaObject.indexOfClassInfo("Version")).value();
-    qDebug() << QString("%1 version: %2").arg(LogSaver::staticMetaObject.className()).arg(version) << Qt::endl;
-    return version;
+    return LogSaver::staticMetaObject.classInfo(LogSaver::staticMetaObject.indexOfClassInfo("Version")).value();;
 }
