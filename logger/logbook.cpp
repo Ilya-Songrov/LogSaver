@@ -17,11 +17,11 @@ Logbook::Logbook(const GlobalSettingsLog &globalSettingsLog, QObject *parent) :
     prefixCriticalGraphics   = AnsiEscapePrivate::getPrefixGraphics("#950000",  "#FFFFFF",  EffectsLog::FADED       );
     prefixFatalGraphics      = AnsiEscapePrivate::getPrefixGraphics("#FF0000",  "#000000",  EffectsLog(EffectsLog::UNDERSCORE | EffectsLog::BOLD));
     prefixInfoGraphics       = AnsiEscapePrivate::getPrefixGraphics("#7b95de",  "",         EffectsLog::DEFAULT     );
-
-
     settingsLog = globalSettingsLog;
-    settingsLog.pathFileLog = settingsLog.pathFileLog.isEmpty() ? DEFAULT_LOG_PATH : settingsLog.pathFileLog;
-    QDir().mkpath(QFileInfo(settingsLog.pathFileLog).absolutePath());
+    settingsLog.logDir          = settingsLog.logDir.isEmpty() ? DEFAULT_LOG_DIR : QDir(settingsLog.logDir).absolutePath();
+    settingsLog.prefixLogFile   = settingsLog.prefixLogFile.isEmpty() ? DEFAULT_PREFIX_LOG_FILE : settingsLog.prefixLogFile;
+
+    QDir().mkpath(settingsLog.logDir);
     qInstallMessageHandler(myMessageOutput);
 }
 
@@ -99,31 +99,29 @@ void Logbook::saveCurrentMsg(const QString &msg, const QByteArray *prefixGraphic
 
 QString Logbook::getSavingFile()
 {
-    const QFileInfo fileInfo(settingsLog.pathFileLog);
-    const QString baseNameFileLog { fileInfo.baseName() };
-    QStringList listFilesLog = getListFilesInDir(fileInfo.absolutePath());
-    QStringList listExistingLogs;
-    for (const QString &file : listFilesLog) {
+    const QStringList listFilesInLogDir = getListFilesInDir(settingsLog.logDir);
+    QStringList listFilesWithPrefix;
+    for (const QString &file : listFilesInLogDir) {
         QString baseName { QFileInfo(file).baseName() };
-        QStringRef leftRef = baseName.leftRef(baseNameFileLog.size());
-        if(leftRef == baseNameFileLog){
-            listExistingLogs.append(file);
+        QStringRef leftRef = baseName.leftRef(settingsLog.prefixLogFile.size());
+        if(leftRef == settingsLog.prefixLogFile){
+            listFilesWithPrefix.append(file);
         }
     }
-    listExistingLogs.sort();
-    QString savingFile = listExistingLogs.isEmpty() ? "" : listExistingLogs.back();
-    if(QFile(savingFile).size() > settingsLog.maxSizeFile || listExistingLogs.isEmpty()){
-        savingFile = baseNameFileLog + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmsszzz");
-        listExistingLogs.append(fileInfo.absolutePath() + "/" + savingFile + ".log");
+    listFilesWithPrefix.sort();
+    QString savingFile = listFilesWithPrefix.isEmpty() ? "" : listFilesWithPrefix.back();
+    if(QFile(savingFile).size() > settingsLog.maxSizeFile || listFilesWithPrefix.isEmpty()){
+        savingFile = settingsLog.prefixLogFile + QDateTime::currentDateTime().toString("yyyyMMdd_hhmmsszzz");
+        listFilesWithPrefix.append(settingsLog.logDir + "/" + savingFile + settingsLog.sufixLogFile);
 
-        if (listExistingLogs.size() > settingsLog.maxQuantityFiles) {
-            listExistingLogs.erase(listExistingLogs.end() - settingsLog.maxQuantityFiles, listExistingLogs.end());
-            for (const QString &file : listExistingLogs) {
+        if (listFilesWithPrefix.size() > settingsLog.maxQuantityFiles) {
+            listFilesWithPrefix.erase(listFilesWithPrefix.end() - settingsLog.maxQuantityFiles, listFilesWithPrefix.end());
+            for (const QString &file : listFilesWithPrefix) {
                 QFile::remove(file);
             }
         }
     }
-    return listExistingLogs.back();
+    return listFilesWithPrefix.back();
 }
 
 QStringList Logbook::getListFilesInDir(const QString &dir)
@@ -139,5 +137,3 @@ QStringList Logbook::getListFilesInDir(const QString &dir)
     }
     return list;
 }
-
-

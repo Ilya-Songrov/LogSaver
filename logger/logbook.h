@@ -11,7 +11,9 @@
 
 
 struct GlobalSettingsLog{
-    QString pathFileLog                             { DEFAULT_LOG_PATH };
+    QString logDir                                  { DEFAULT_LOG_DIR };
+    QString prefixLogFile                           { DEFAULT_PREFIX_LOG_FILE };
+    QString sufixLogFile                            { DEFAULT_SUFIX_LOG_FILE };
     int maxSizeFile                                 { 50000000 }; // 50MB
     int maxQuantityFiles                            { 5 };
     bool useAnsiEscapeCode                          { true };

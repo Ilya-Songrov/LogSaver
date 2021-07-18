@@ -4,7 +4,9 @@
 #include <QCoreApplication>
 #include <QDir>
 
-#define DEFAULT_LOG_PATH QDir::currentPath() + QString("/Log/%1.log").arg(QCoreApplication::applicationName())
+#define DEFAULT_LOG_DIR             QDir::currentPath() + "/log"
+#define DEFAULT_PREFIX_LOG_FILE     QCoreApplication::applicationName()
+#define DEFAULT_SUFIX_LOG_FILE      ".log"
 
 class Logbook;
 
@@ -16,8 +18,8 @@ class LogSaver : QObject
 
     Logbook *logbook;
 public:
-    // TODO: Change constuctor with such params: logDir and prefixLogFile
-    explicit LogSaver(const QString &pathFileLog = DEFAULT_LOG_PATH, QObject *parent = nullptr);
+    explicit LogSaver(const QString &logDir = DEFAULT_LOG_DIR, const QString &prefixLogFile = DEFAULT_PREFIX_LOG_FILE
+            , const QString &sufixLogFile = DEFAULT_SUFIX_LOG_FILE, QObject *parent = nullptr);
 
     static QString getVersionClass();
 };

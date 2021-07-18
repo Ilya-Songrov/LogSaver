@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "logsaver.h"
-#include "ApplicationNotify.h"
+#include "applicationnotify.h"
 
 int main(int argc, char *argv[])
 {

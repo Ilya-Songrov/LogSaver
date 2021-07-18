@@ -3,10 +3,12 @@
 
 #include <QMetaClassInfo>
 
-LogSaver::LogSaver(const QString &pathFileLog, QObject *parent) : QObject(parent)
+LogSaver::LogSaver(const QString &logDir, const QString &prefixLogFile, const QString &sufixLogFile, QObject *parent)
 {
     GlobalSettingsLog globalSettingsLog;
-    globalSettingsLog.pathFileLog = pathFileLog;
+    globalSettingsLog.logDir        = logDir;
+    globalSettingsLog.prefixLogFile = prefixLogFile;
+    globalSettingsLog.sufixLogFile  = sufixLogFile;
     logbook = new Logbook(globalSettingsLog, this);
     qDebug() << "\033[48;2;6;185;185m"
              << "Start" << QCoreApplication::applicationName() << QDateTime::currentDateTime().toString("yyyy:MM:dd - hh:mm:ss:zzz")
