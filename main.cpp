@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
         QCoreApplication::setApplicationVersion(LogSaver::getVersionClass());
 
         LogSaver logSaver;
+//        LogSaver logSaver("../logtest/", "test1", "log");
 
         QCommandLineParser parser;
         parser.setApplicationDescription("App description");
