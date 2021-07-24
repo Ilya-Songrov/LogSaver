@@ -1,1 +1,1 @@
-## Saver QDebug to file (int qt)
+## Saver QDebug to file (qt)
