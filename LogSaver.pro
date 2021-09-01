@@ -2,30 +2,14 @@ QT -= gui
 
 CONFIG += c++11
 
+include(LogSaver.pri)
+
+SOURCES += \
+    main.cpp
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-SOURCES += \
-    Exceptions/exceptions/exceptionerror.cpp \
-    Exceptions/exceptions/unixsignalnotifier.cpp \
-    logger/ansiescapeprivate.cpp \
-    logger/logbook.cpp \
-    logger/logsaver.cpp \
-    main.cpp
-
-HEADERS += \
-    Exceptions/exceptions/applicationnotify.h \
-    Exceptions/exceptions/exceptionerror.h \
-    Exceptions/exceptions/unixsignalnotifier.h \
-    logger/ansiescapeprivate.h \
-    logger/logbook.h \
-    logger/logsaver.h
-
-INCLUDEPATH += \
-    Exceptions/exceptions \
-    logger \
 
 # Default rules for deployment.
 unix {
