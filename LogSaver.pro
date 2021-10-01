@@ -17,6 +17,9 @@ unix {
 }
 !isEmpty(target.path): INSTALLS += target
 
+
+
+
 CONFIG(debug, debug | release) {
 QT      += core
 CONFIG += console
