@@ -1,16 +1,5 @@
 # QDebug Saver to file (qt)
 
-
-## Installing:
-1. Or clone with submodule
-```
-git clone --recurse-submodules -j8 <this_repo>
-```
-2. Or run configure after cloning
-```
-./configure
-```
-
 ## How to use:
 
 1. To compile as static library
