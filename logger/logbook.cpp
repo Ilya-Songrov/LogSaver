@@ -115,8 +115,8 @@ QString Logbook::getSavingFile()
     QStringList listFilesWithPrefix;
     for (const QString &file : listFilesInLogDir) {
         QString baseName { QFileInfo(file).baseName() };
-        QStringRef leftRef = baseName.leftRef(settingsLog.prefixLogFile.size());
-        if(leftRef == settingsLog.prefixLogFile){
+        const QString left = baseName.left(settingsLog.prefixLogFile.size());
+        if(left == settingsLog.prefixLogFile){
             listFilesWithPrefix.append(file);
         }
     }
